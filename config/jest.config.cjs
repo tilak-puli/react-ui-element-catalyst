@@ -21,7 +21,7 @@ module.exports = {
   collectCoverageFrom: [
     '!*.d.ts',
     "src/**/*.{js,ts,jsx,tsx}",
-    "!src/main.tsx",
+    "!src/index.tsx",
     "!src/vite-env.d.ts",
   ],
   coverageReporters: ["text"],
