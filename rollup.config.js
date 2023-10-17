@@ -1,9 +1,8 @@
-import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
-import resolve from 'rollup-plugin-node-resolve';
-import replace from 'rollup-plugin-replace';
-import ts from '@wessberg/rollup-plugin-ts';
-import pkg from './package.json';
+import babel from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
+import ts from 'rollup-plugin-ts';
 
 const PLUGINS = [
   ts(),
@@ -13,29 +12,28 @@ const PLUGINS = [
   }),
   replace({
     'process.env.NODE_ENV': JSON.stringify('production'),
-    _VERSION: JSON.stringify(pkg.version),
   }),
   commonjs(),
 ];
 
 export default [
   {
-    input: 'src/index.ts',
+    input: 'src/index.tsx',
     external: ['react', 'prop-types'],
     output: [
-      {file: pkg.main, format: 'cjs'},
-      {file: pkg.module, format: 'es'},
+      {file: 'dist/ui-element.js', format: 'cjs'},
+      {file: 'dist/ui-element.esm.js', format: 'es'},
     ],
     plugins: PLUGINS,
   },
   // UMD build with inline PropTypes
   {
-    input: 'src/index.ts',
+    input: 'src/index.tsx',
     external: ['react'],
     output: [
       {
         name: 'ReactStripe',
-        file: pkg.browser,
+        file: 'dist/ui-element.umd.js',
         format: 'umd',
         globals: {
           react: 'React',
@@ -46,12 +44,12 @@ export default [
   },
   // Minified UMD Build without PropTypes
   {
-    input: 'src/index.ts',
+    input: 'src/index.tsx',
     external: ['react'],
     output: [
       {
         name: 'ReactStripe',
-        file: pkg['browser:min'],
+        file: 'dist/ui-element.umd.min.js',
         format: 'umd',
         globals: {
           react: 'React',
