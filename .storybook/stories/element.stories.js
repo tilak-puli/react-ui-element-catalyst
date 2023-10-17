@@ -5,7 +5,14 @@ const meta = {
 };
 
 export const Primary = {
-  render: () => <ElementComponent />,
+  render: (args) => <ElementComponent {...args} />,
+  argTypes: {
+    color: {control: 'color'},
+  },
+  args: {
+    //👇 Now all Button stories will be primary.
+    color: 'red',
+  },
 };
 
 export default meta;
